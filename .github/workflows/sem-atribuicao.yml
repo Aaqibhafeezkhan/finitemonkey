@@ -1,0 +1,41 @@
+name: sem-atribuicao
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sem-atribuicao-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Título, descrição e commits sem crédito a ferramenta de IA
+        env:
+          LC_ALL: C.UTF-8
+          TITULO: ${{ github.event.pull_request.title }}
+          CORPO: ${{ github.event.pull_request.body }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          padrao='Co-Authored-By:.*(claude|anthropic)|noreply@anthropic\.com|generated with \[?claude|🤖 generated|claude\.ai/code/session|made with claude|feito com (o )?claude'
+          falhou=0
+          if printf '%s\n%s\n' "$TITULO" "$CORPO" | grep -Eiq "$padrao"; then
+            echo "::error title=Crédito a ferramenta de IA no PR::O título ou a descrição cita ferramenta de IA. Apague a linha (por exemplo 'Generated with Claude Code') e salve o PR; esta checagem roda de novo sozinha."
+            printf '%s\n%s\n' "$TITULO" "$CORPO" | grep -Ein "$padrao" || true
+            falhou=1
+          fi
+          if git log --format='%H %s%n%b' "$BASE..$HEAD" | grep -Eiq "$padrao"; then
+            echo "::error title=Crédito a ferramenta de IA em commit::Há commit com crédito a ferramenta de IA (por exemplo 'Co-Authored-By: Claude'). Reescreva a mensagem com 'git rebase -i $BASE' e 'reword', ou faça squash com a mensagem limpa, e envie com 'git push --force-with-lease'."
+            git log --format='%h %s%n%b' "$BASE..$HEAD" | grep -Ein -B1 "$padrao" || true
+            falhou=1
+          fi
+          exit $falhou
