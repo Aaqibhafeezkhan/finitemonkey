@@ -124,17 +124,23 @@ El segundo ensayo, [La ilusión del segundo cerebro](docs/second-brain/second-br
 Todavía no se sabe. El banco de pruebas, las tareas con trampas y los usuarios simulados están construidos, pero el benchmark todavía no se ejecutó. Compara Claude Code solo, Claude Code con Finite Monkey y Finite Monkey sin una pieza cada vez, en tareas con trampas. Mide tareas terminadas de verdad, "listo" falso, secretos filtrados, trabajo perdido, tokens y tiempo. La regla sin efecto medido sale del núcleo. El método y los resultados en bruto se publicarán en este repositorio.
 
 <!-- generated:evidence:start -->
-Tasas de error de los guards siempre activos, reproducidas con `npm run evidence` en la versión 0.1.0-next.44 sobre el corpus etiquetado en [bench/corpus](bench/corpus). Una release falla cuando la tasa de falsos positivos de un guard pasa del 15% o cuando su corpus tiene menos de 50 casos que deben bloquear o 50 que deben pasar. Por ahora todos los casos son sintéticos, escritos a partir de las listas de prueba de los propios guards; los casos de sesiones reales se contarán aparte.
+Tasas de error de los guards siempre activos, reproducidas con `npm run evidence` en la versión 0.1.0-next.45 sobre el corpus etiquetado en [bench/corpus](bench/corpus). Una release falla cuando la tasa de falsos positivos de un guard pasa del 15% o cuando su corpus tiene menos de 50 casos que deben bloquear o 50 que deben pasar. Por ahora todos los casos son sintéticos, escritos a partir de las listas de prueba de los propios guards; los casos de sesiones reales se contarán aparte.
 
 | Guard | Debe bloquear | Debe dejar | Falsos positivos | Falsos negativos | p95 (ms) |
 |---|---|---|---|---|---|
 | `secrets` | 59 | 54 | 0/54 (0.0%) | 0/59 (0.0%) | 0.2 |
-| `gate` | 52 | 52 | 2/52 (3.9%) | 0/52 (0.0%) | 24.2 |
-| `git` | 58 | 62 | 0/62 (0.0%) | 0/58 (0.0%) | 55.3 |
-| `rules` | 50 | 55 | 0/55 (0.0%) | 0/50 (0.0%) | 0.9 |
-| `remote` | 54 | 54 | 0/54 (0.0%) | 0/54 (0.0%) | 1.8 |
+| `gate` | 52 | 52 | 0/52 (0.0%) | 0/52 (0.0%) | 30.1 |
+| `git` | 58 | 62 | 0/62 (0.0%) | 0/58 (0.0%) | 60.6 |
+| `rules` | 50 | 55 | 0/55 (0.0%) | 0/50 (0.0%) | 1.0 |
+| `remote` | 54 | 54 | 0/54 (0.0%) | 0/54 (0.0%) | 0.4 |
 
 Costo frente a Claude Code solo en las mismas tareas: todavía sin medir.
+
+Escenarios del guardian reproducidos con `npm run bench:guardian` (bench/guardian/results.json): un falso positivo es una alerta en un escenario que no la necesitaba, un falso negativo es silencio en uno que sí la necesitaba.
+
+| Escenarios | Pedían alerta | No pedían | Falsos positivos | Falsos negativos | Nivel exacto |
+|---|---|---|---|---|---|
+| 15 | 11 | 4 | 0/4 (0.0%) | 0/11 (0.0%) | 15/15 |
 <!-- generated:evidence:end -->
 
 ## ¿En qué se diferencia de...?
