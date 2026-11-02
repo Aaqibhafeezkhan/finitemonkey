@@ -9,6 +9,7 @@ import { dirname, join } from "node:path";
 import { type AbsolutePath, toAbsolutePath } from "../src/core/brand.js";
 import { nodeRuntime } from "../src/core/node-runtime.js";
 import type { JsonObject } from "../src/core/parsed.js";
+import type { Runtime } from "../src/core/runtime.js";
 import type { HookEvent } from "../src/hooks/events.js";
 import type { HookDecision, HookHandler } from "../src/hooks/handlers.js";
 import { createTranslator } from "../src/i18n/translate.js";
@@ -51,7 +52,7 @@ export const tempRepo = (files: Readonly<Record<string, string>> = { "README.md"
   return {
     root,
     dispose: () => {
-      rmSync(root, { recursive: true, force: true });
+      rmSync(root, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 });
     },
   };
 };
@@ -63,11 +64,12 @@ export const hook = async (
   event: HookEvent,
   cwd: AbsolutePath,
   raw: JsonObject = {},
+  using: Runtime = runtime,
 ): Promise<HookDecision> =>
   handler({
     event,
     cwd,
-    runtime,
+    runtime: using,
     t,
     env: {},
     payload: {
