@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.0-next.44](https://github.com/gabrielvieiraf/finitemonkey/compare/v0.1.0-next.43...v0.1.0-next.44) (2026-11-02)
+
+### Features
+
+* **signals:** log scope additions, split verification cost, add drift indicators ([#404](https://github.com/gabrielvieiraf/finitemonkey/issues/404)) ([0c27416](https://github.com/gabrielvieiraf/finitemonkey/commit/0c2741622b46fa60e632a6cb7b2d33bc8a9f5412)), closes [#374](https://github.com/gabrielvieiraf/finitemonkey/issues/374) [#369](https://github.com/gabrielvieiraf/finitemonkey/issues/369)
+
 ## [0.1.0-next.43](https://github.com/gabrielvieiraf/finitemonkey/compare/v0.1.0-next.42...v0.1.0-next.43) (2026-11-02)
 
 ### Features

@@ -1,6 +1,6 @@
 {
   "schema": "finitemonkey/evidence@1",
-  "version": "0.1.0-next.43",
+  "version": "0.1.0-next.44",
   "budget": {
     "fprWarn": 0.05,
     "fprFail": 0.15,
@@ -18,7 +18,7 @@
       "fpr": 0,
       "fnr": 0,
       "p50Ms": 0.06,
-      "p95Ms": 0.13,
+      "p95Ms": 0.16,
       "byOrigin": {
         "synthetic": 113,
         "session": 0
@@ -35,7 +35,7 @@
       "fpr": 0.0385,
       "fnr": 0,
       "p50Ms": 0.09,
-      "p95Ms": 22.86,
+      "p95Ms": 24.24,
       "byOrigin": {
         "synthetic": 104,
         "session": 0
@@ -54,8 +54,8 @@
       "falseNegatives": 0,
       "fpr": 0,
       "fnr": 0,
-      "p50Ms": 9.39,
-      "p95Ms": 50.82,
+      "p50Ms": 9.78,
+      "p95Ms": 55.25,
       "byOrigin": {
         "synthetic": 120,
         "session": 0
@@ -72,7 +72,7 @@
       "fpr": 0,
       "fnr": 0,
       "p50Ms": 0.14,
-      "p95Ms": 0.83,
+      "p95Ms": 0.9,
       "byOrigin": {
         "synthetic": 105,
         "session": 0
